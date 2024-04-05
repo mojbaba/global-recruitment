@@ -2,7 +2,12 @@ using GlobalRecruitment.Console.Clients;
 
 namespace GlobalRecruitment.Console.Services;
 
-public class MatchService(ITechnologyClient technologyClient, ICandidateClient candidateClient)
+public interface IMatchService
+{
+    Task<List<Candidate>> GetMatchedCandidatesAsync(IEnumerable<Experience> technologyExperiences);
+}
+
+public class MatchService(ITechnologyClient technologyClient, ICandidateClient candidateClient) : IMatchService 
 {
     private IEnumerable<Technology> _cachedTechnologies;
 
