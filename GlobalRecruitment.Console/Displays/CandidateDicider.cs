@@ -25,7 +25,6 @@ public class CandidateDicider
 
     public Decision DisplayDecision(Candidate candidate)
     {
-        AnsiConsole.Clear();
         var root = new Tree("Candidate");
 
         root.AddNode($"Full Name: [green bold]{candidate.FullName}[/]");

@@ -42,20 +42,29 @@ while (loadMore)
         AnsiConsole.MarkupLine("No more candidates to display.");
     }
     
-    foreach (var candidate in candidates)
-    {
-        var decision = decisionDisplayService.DisplayDecision(candidate);
+    AnsiConsole.Progress()
+        .Start(ctx =>
+        {
+            var processingCandidates = ctx.AddTask("[green]Processing candidates...[/]");
+            processingCandidates.MaxValue = candidates.Count();
 
-        if (decision == Decision.AcceptCandidate)
-        {
-            acceptedCandidates.Add(candidate);
-        }
-        else if (decision == Decision.Finish)
-        {
-            loadMore = false;
-            break;
-        }
-    }
+            foreach (var candidate in candidates)
+            {
+                processingCandidates.Increment(1);
+                AnsiConsole.Clear();
+                var decision = decisionDisplayService.DisplayDecision(candidate);
+
+                if (decision == Decision.AcceptCandidate)
+                {
+                    acceptedCandidates.Add(candidate);
+                }
+                else if (decision == Decision.Finish)
+                {
+                    loadMore = false;
+                    break;
+                }
+            }
+        });
     
     if(loadMore && AnsiConsole.Confirm("Do you want to load more candidates?"))
     {
