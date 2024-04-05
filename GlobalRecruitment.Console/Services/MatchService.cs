@@ -7,13 +7,12 @@ public interface IMatchService
     Task<List<Candidate>> GetMatchedCandidatesAsync(IEnumerable<Experience> technologyExperiences);
 }
 
-public class MatchService(ITechnologyClient technologyClient, ICandidateClient candidateClient) : IMatchService 
+public class MatchService(IEnumerable<Technology> technologies, ICandidateClient candidateClient) : IMatchService 
 {
     private IEnumerable<Technology> _cachedTechnologies;
 
     public async Task<List<Candidate>> GetMatchedCandidatesAsync(IEnumerable<Experience> technologyExperiences)
     {
-        var technologies = (_cachedTechnologies ??= await technologyClient.GetTechnologiesAsync());
         var candidates = await candidateClient.GetCandidatesAsync();
         
         var matchingCandidates = candidates

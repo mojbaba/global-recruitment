@@ -11,7 +11,7 @@ public class MatchServiceTest
         // Arrange
         var technologyClient = new MockedTechnologyClient();
         var candidateClient = new MockedCandidateClient();
-        var matchService = new MatchService(technologyClient, candidateClient);
+        var matchService = new MatchService(await technologyClient.GetTechnologiesAsync(), candidateClient);
 
         var technologyExperiences = new List<Experience>
         {

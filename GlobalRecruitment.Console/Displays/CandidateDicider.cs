@@ -5,6 +5,13 @@ using Spectre.Console;
 
 namespace GlobalRecruitment.Console.Services;
 
+public enum Decision
+{
+    NextCandidate,
+    AcceptCandidate,
+    Finish
+}
+
 public class CandidateDicider
 {
     private readonly Dictionary<string, string> _technologies;
@@ -16,7 +23,7 @@ public class CandidateDicider
         _wantedExperiences = wantedExperiences.Select(a => a.TechnologyId).ToHashSet();
     }
 
-    public bool DisplayDecision(Candidate candidate)
+    public Decision DisplayDecision(Candidate candidate)
     {
         AnsiConsole.Clear();
         var root = new Tree("Candidate");
@@ -49,17 +56,19 @@ public class CandidateDicider
 
         // Render the tree
         AnsiConsole.Write(root);
+        
+        var decision = AnsiConsole.Prompt(
+            new SelectionPrompt<Decision>()
+                .Title("What do you want to do?")
+                .PageSize(3)
+                .AddChoices(new[]
+                {
+                    Decision.NextCandidate,
+                    Decision.AcceptCandidate,
+                    Decision.Finish,
+                })
+        );
 
-        if(AnsiConsole.Confirm("Next Candidate?"))
-        {
-            return false;
-        }else if (AnsiConsole.Confirm("Do you accept this candidate?"))
-        {
-            return true;
-        }
-        else
-        {
-            return DisplayDecision(candidate);
-        }
+        return decision;
     }
 }

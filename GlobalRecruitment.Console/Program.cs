@@ -10,30 +10,59 @@ var candidateClient = new CandidateClient();
 
 IEnumerable<Technology> technologies = null;
 
-// Asynchronous
 await AnsiConsole.Status()
-    .StartAsync("Loading Technologies...", async ctx => 
-    {
-        // Omitted
-        technologies = await technologyClient.GetTechnologiesAsync();
-    });
+    .StartAsync("Loading Technologies...",
+        async ctx => { technologies = await technologyClient.GetTechnologiesAsync(); });
 
 
 var wantedExperiences = new ExperienceRequirementSelector(technologies).SelectExperienceRequirements();
 
-var decisionDisplayService = new CandidateDicider(technologies, wantedExperiences );
+var decisionDisplayService = new CandidateDicider(technologies, wantedExperiences);
 
+var matchService = new MatchService(technologies, candidateClient);
 
 List<Candidate> acceptedCandidates = new();
 
-var candidates = await candidateClient.GetCandidatesAsync();
+bool loadMore = true;
 
-foreach (var candidate in candidates)
+IEnumerable<Candidate> candidates = null;
+
+
+while (loadMore)
 {
-    if(decisionDisplayService.DisplayDecision(candidate))
+    await AnsiConsole.Status()
+        .StartAsync("Loading Candidates...", async ctx =>
+        {
+            var allCandidates = await candidateClient.GetCandidatesAsync();
+            candidates = await matchService.GetMatchedCandidatesAsync(wantedExperiences);
+        });
+
+    if(candidates.Count() == 0)
     {
-        acceptedCandidates.Add(candidate);
+        AnsiConsole.MarkupLine("No more candidates to display.");
+    }
+    
+    foreach (var candidate in candidates)
+    {
+        var decision = decisionDisplayService.DisplayDecision(candidate);
+
+        if (decision == Decision.AcceptCandidate)
+        {
+            acceptedCandidates.Add(candidate);
+        }
+        else if (decision == Decision.Finish)
+        {
+            loadMore = false;
+            break;
+        }
+    }
+    
+    if(loadMore && AnsiConsole.Confirm("Do you want to load more candidates?"))
+    {
+        loadMore = true;
+    }
+    else
+    {
+        loadMore = false;
     }
 }
-
-
