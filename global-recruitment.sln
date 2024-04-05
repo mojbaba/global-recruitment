@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalRecruitment.Console", "GlobalRecruitment.Console\GlobalRecruitment.Console.csproj", "{094B7148-90C3-4B46-901D-302EB757442A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalRecruitment.Test", "GlobalRecruitment.Test\GlobalRecruitment.Test.csproj", "{658CA856-8AC8-41CF-B3E2-1C4764177EDF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{094B7148-90C3-4B46-901D-302EB757442A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{094B7148-90C3-4B46-901D-302EB757442A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{094B7148-90C3-4B46-901D-302EB757442A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{094B7148-90C3-4B46-901D-302EB757442A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{658CA856-8AC8-41CF-B3E2-1C4764177EDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{658CA856-8AC8-41CF-B3E2-1C4764177EDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{658CA856-8AC8-41CF-B3E2-1C4764177EDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{658CA856-8AC8-41CF-B3E2-1C4764177EDF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
