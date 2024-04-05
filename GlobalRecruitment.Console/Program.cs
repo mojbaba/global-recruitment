@@ -75,3 +75,8 @@ while (loadMore)
         loadMore = false;
     }
 }
+
+AnsiConsole.Clear();
+
+var selectedCandidatesDisplay = new SelectedCandidatesDisplay(technologies, wantedExperiences);
+selectedCandidatesDisplay.Display(acceptedCandidates);
