@@ -85,3 +85,8 @@ if the list of current API candidates is finished, you will be asked if you want
 - The 3-4 hour time to do the task was not enough to implement all the requirements, so I focused on the main requirements and the main functionalities.
 
 - The UI/UX of the application is not the best, but it's functional and easy to use.
+
+- It's better to use appsettings.json to store the API URL.
+
+- It's better to have logs in the application to track the errors and the application flow.
+
