@@ -37,36 +37,39 @@ while (loadMore)
             candidates = await matchService.GetMatchedCandidatesAsync(wantedExperiences);
         });
 
-    if(candidates.Count() == 0)
+    if (candidates.Count() == 0)
     {
-        AnsiConsole.MarkupLine("No more candidates to display.");
+        AnsiConsole.MarkupLine("No candidates to display.");
     }
-    
-    AnsiConsole.Progress()
-        .Start(ctx =>
-        {
-            var processingCandidates = ctx.AddTask("[green]Processing candidates...[/]");
-            processingCandidates.MaxValue = candidates.Count();
+    else
+    {
+        AnsiConsole.Progress()
+              .Start(ctx =>
+              {
+                  var processingCandidates = ctx.AddTask("[green]Processing candidates...[/]");
+                  processingCandidates.MaxValue = candidates.Count();
 
-            foreach (var candidate in candidates)
-            {
-                processingCandidates.Increment(1);
-                AnsiConsole.Clear();
-                var decision = decisionDisplayService.DisplayDecision(candidate);
+                  foreach (var candidate in candidates)
+                  {
+                      processingCandidates.Increment(1);
+                      AnsiConsole.Clear();
+                      var decision = decisionDisplayService.DisplayDecision(candidate);
 
-                if (decision == Decision.AcceptCandidate)
-                {
-                    acceptedCandidates.Add(candidate);
-                }
-                else if (decision == Decision.Finish)
-                {
-                    loadMore = false;
-                    break;
-                }
-            }
-        });
-    
-    if(loadMore && AnsiConsole.Confirm("Do you want to load more candidates?"))
+                      if (decision == Decision.AcceptCandidate)
+                      {
+                          acceptedCandidates.Add(candidate);
+                      }
+                      else if (decision == Decision.Finish)
+                      {
+                          loadMore = false;
+                          break;
+                      }
+                  }
+              });
+    }
+
+
+    if (loadMore && AnsiConsole.Confirm("Do you want to load more candidates?"))
     {
         loadMore = true;
     }
