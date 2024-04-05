@@ -2,5 +2,5 @@ namespace GlobalRecruitment.Console.Clients;
 
 public interface ICandidateClient
 {
-    Task<IEnumerable<Candidate>> GetCandidates();
+    Task<IEnumerable<Candidate>> GetCandidatesAsync();
 }

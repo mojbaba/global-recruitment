@@ -2,5 +2,5 @@ namespace GlobalRecruitment.Console.Clients;
 
 public interface ITechnologyClient
 {
-    Task<IEnumerable<Technology>> GetTechnologies();
+    Task<IEnumerable<Technology>> GetTechnologiesAsync();
 }
