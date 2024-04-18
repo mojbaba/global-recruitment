@@ -54,5 +54,8 @@ public class SelectedCandidatesDisplay
 
         // Render the tree
         AnsiConsole.Write(root);
+        
+        AnsiConsole.MarkupLine("Press any key to continue...");
+        System.Console.ReadKey();
     }
 }
