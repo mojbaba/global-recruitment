@@ -21,11 +21,26 @@ var decisionDisplayService = new CandidateDicider(technologies, wantedExperience
 
 var matchService = new MatchService(technologies, candidateClient);
 
+
+
 List<Candidate> acceptedCandidates = new();
+
+if(System.IO.File.Exists("acceptedCandidates.json"))
+{
+    var jsonCandidatesToLoad = System.IO.File.ReadAllText("acceptedCandidates.json");
+    acceptedCandidates = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Candidate>>(jsonCandidatesToLoad);
+    if(AnsiConsole.Confirm("There are previously saved candidates. Do you want to load them?"))
+    {
+        var savedCandidatesDisplay = new SelectedCandidatesDisplay(technologies, wantedExperiences);
+        savedCandidatesDisplay.Display(acceptedCandidates);
+    }
+}
 
 bool loadMore = true;
 
 IEnumerable<Candidate> candidates = null;
+
+
 
 
 while (loadMore)
@@ -83,3 +98,7 @@ AnsiConsole.Clear();
 
 var selectedCandidatesDisplay = new SelectedCandidatesDisplay(technologies, wantedExperiences);
 selectedCandidatesDisplay.Display(acceptedCandidates);
+var jsonCandidatesToSave = Newtonsoft.Json.JsonConvert.SerializeObject(acceptedCandidates);
+
+System.IO.File.WriteAllText("acceptedCandidates.json", jsonCandidatesToSave);
+AnsiConsole.MarkupLine("Candidates saved to [green]acceptedCandidates.json[/]");
